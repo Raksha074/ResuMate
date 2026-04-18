@@ -43,7 +43,13 @@ const ResumeBuilder = () => {
    try {
     const {data} = await api.get('/resumes/get/' + resumeId, {headers: { Authorization: token }})
     if(data.resume){
-      setResumeData(data.resume)
+
+        const normalizedData = {
+                ...data.resume,
+                projects: data.resume.projects || data.resume.project || []
+            };
+            
+      setResumeData(normalizedData)
       document.title = data.resume.title;
     }
    } catch (error) {
@@ -129,8 +135,13 @@ const saveResume = async () => {
 
     const { data } = await api.put('/resumes/update', formData, {headers: { Authorization: token }})
 
+    const savedData = {
+            ...data.resume,
+            projects: data.resume.projects || data.resume.project || []
+        };
+
     // Update local state with the saved data from the server
-    setResumeData(data.resume)
+    setResumeData(savedData)
     toast.success(data.message)
   } catch (error) {
     console.error("Error saving resume:", error)

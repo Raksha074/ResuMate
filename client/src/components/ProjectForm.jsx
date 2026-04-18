@@ -51,7 +51,7 @@ const ProjectForm = ({ data, onChange }) => {
                             </button>
                         </div>
                         <div className='grid gap-3'>
-                            <input value={project.title || ''} onChange={(e) => updateProject(index, 'title', e.target.value)} type='text' placeholder='Project Title' className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#a75296] focus:border-[#a75296] outline-none transition-colors text-sm' />
+                            <input value={project.name || project.title} onChange={(e) => updateProject(index, 'title', e.target.value)} type='text' placeholder='Project Title' className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#a75296] focus:border-[#a75296] outline-none transition-colors text-sm' />
 
                             <input value={project.type || ''} onChange={(e) => updateProject(index, 'type', e.target.value)} type='text' placeholder='Project Type' className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#a75296] focus:border-[#a75296] outline-none transition-colors text-sm' />
 

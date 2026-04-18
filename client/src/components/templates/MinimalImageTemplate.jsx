@@ -171,33 +171,38 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     )}
 
                     
-                    {/* Projects Section */}
-{(data.projects || data.project) && (data.projects || data.project).length > 0 && (
-    <section>
-        <h2 className="text-sm uppercase tracking-widest font-semibold" style={{ color: accentColor }}>
+{/* Projects Section - Safe Check */}
+{((data?.projects && data.projects.length > 0) || (data?.project && data.project.length > 0)) && (
+    <section className="mb-8">
+        <h2 className="text-sm uppercase tracking-widest font-semibold mb-3" style={{ color: accentColor }}>
             PROJECTS
         </h2>
         <div className="space-y-4">
-           
+            {/* Dono possibilities (plural/singular) ko merge karke map karein */}
             {(data.projects || data.project).map((project, index) => (
                 <div key={index}>
-                    
-                    
-                    <h3 className="text-md font-medium text-zinc-800 mt-3">
-                        {project.name || project.title }
+                    <h3 className="text-md font-medium text-zinc-800">
+                        {project.name || project.title || "Project Name"}
                     </h3>
-                    {project.link && (
-                 <a 
-                      href={project.link.startsWith('http') ? project.link : `https://${project.link}`} 
-                      target="_blank" 
-                     rel="noopener noreferrer"
-                    className="text-sm hover:underline flex items-center gap-1"
-                    style={{ color: accentColor }}
-                    >
                     
-                     {project.link.replace(/^https?:\/\//, '')} 
-                 </a>
-               )}  
+                    <div className="flex flex-wrap gap-2 mb-1">
+                        {project.type && (
+                            <p className="text-sm font-medium" style={{ color: accentColor }}>
+                                {project.type}
+                            </p>
+                        )}
+                        {project.link && (
+                            <a 
+                                href={project.link.startsWith('http') ? project.link : `https://${project.link}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-sm hover:underline"
+                                style={{ color: accentColor }}
+                            >
+                                {project.link.replace(/^https?:\/\//, '')}
+                            </a>
+                        )}
+                    </div>
 
                     {project.description && (
                         <ul className="list-disc list-inside text-sm text-zinc-700 space-y-1">
