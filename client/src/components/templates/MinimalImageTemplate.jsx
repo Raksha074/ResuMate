@@ -183,7 +183,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                 <div key={index}>
                     {/* Yahan 'name' aur 'title' dono check ho rahe hain */}
                     <h3 className="text-md font-medium text-zinc-800 mt-3">
-                        {project.name || project.title || "Untitled Project"}
+                        {project.name || project.title }
                     </h3>
                     
                     {/* 'type' ya 'link' display karne ke liye */}
