@@ -32,3 +32,15 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
+
+app.use(express.json());
+
+// 4. Routes
+app.get('/', (req, res) => res.send("Server is live..."));
+app.use('/api/users', userRouter);
+// ... other routes
+
+// 5. START SERVER (This is what Render is looking for!)
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+});
