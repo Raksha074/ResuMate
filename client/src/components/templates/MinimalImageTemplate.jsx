@@ -170,7 +170,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         </section>
                     )}
 
-                    {/* Projects */}
+                    
                     {/* Projects Section */}
 {(data.projects || data.project) && (data.projects || data.project).length > 0 && (
     <section>
@@ -178,18 +178,26 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
             PROJECTS
         </h2>
         <div className="space-y-4">
-            {/* Dono variables handle kiye hain taaki agar data.projects ho ya data.project, crash na ho */}
+           
             {(data.projects || data.project).map((project, index) => (
                 <div key={index}>
-                    {/* Yahan 'name' aur 'title' dono check ho rahe hain */}
+                    
+                    
                     <h3 className="text-md font-medium text-zinc-800 mt-3">
                         {project.name || project.title }
                     </h3>
+                    {project.link && (
+                 <a 
+                      href={project.link.startsWith('http') ? project.link : `https://${project.link}`} 
+                      target="_blank" 
+                     rel="noopener noreferrer"
+                    className="text-sm hover:underline flex items-center gap-1"
+                    style={{ color: accentColor }}
+                    >
                     
-                    {/* 'type' ya 'link' display karne ke liye */}
-                    <p className="text-sm mb-1" style={{ color: accentColor }} >
-                        {project.type || project.link}
-                    </p>
+                     {project.link.replace(/^https?:\/\//, '')} 
+                 </a>
+               )}  
 
                     {project.description && (
                         <ul className="list-disc list-inside text-sm text-zinc-700 space-y-1">
