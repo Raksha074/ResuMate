@@ -112,43 +112,29 @@ const ResumeBuilder = () => {
     
 const saveResume = async () => {
   try {
-    let updatedResumeData = structuredClone(resumeData)
+    let updatedResumeData = structuredClone(resumeData);
 
-    // Ensure we don't send the local preview blob to the backend
-    if(typeof resumeData.personal_info.image === 'object'){
-      delete updatedResumeData.personal_info.image
+    
+    if (typeof resumeData.personal_info.image === 'object') {
+      delete updatedResumeData.personal_info.image;
     }
 
     const formData = new FormData();
-    formData.append("resumeId", resumeId)
-    formData.append('resumeData', JSON.stringify(updatedResumeData))
+    formData.append("resumeId", resumeId);
+    formData.append('resumeData', JSON.stringify(updatedResumeData));
     
-    // This tells your backend whether to trigger the AI or not
-    if (removeBackground) {
-        formData.append("removeBackground", "true");
-    }
     
-    // Only append the image file if the user actually selected a new one
-    if (typeof resumeData.personal_info.image === 'object') {
-        formData.append("image", resumeData.personal_info.image)
-    }
 
-    const { data } = await api.put('/resumes/update', formData, {headers: { Authorization: token }})
+    const { data } = await api.put('/resumes/update', formData, {headers: { Authorization: token }});
 
-    const savedData = {
-            ...data.resume,
-            projects: data.resume.projects || data.resume.project || []
-        };
-
-    // Update local state with the saved data from the server
-    setResumeData(savedData)
-    toast.success(data.message)
+    
+    setResumeData(data.resume);
+    toast.success(data.message);
   } catch (error) {
-    console.error("Error saving resume:", error)
-    toast.error("Failed to save changes")
+    console.error("Error saving resume:", error);
+    toast.error("Failed to save changes");
   }
 }
-
 
 
     return (
