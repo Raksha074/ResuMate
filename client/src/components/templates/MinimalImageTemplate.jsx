@@ -171,30 +171,38 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     )}
 
                     {/* Projects */}
-                    {data.project && data.project.length > 0 && (
-                        <section>
-                            <h2 className="text-sm uppercase tracking-widest font-semibold" style={{ color: accentColor }}>
-                                PROJECTS
-                            </h2>
-                            <div className="space-y-4">
-                                {data.project.map((project, index) => (
-                                    <div key={index}>
-                                        <h3 className="text-md font-medium text-zinc-800 mt-3">{project.name}</h3>
-                                        <p className="text-sm mb-1" style={{ color: accentColor }} >
-                                            {project.type}
-                                        </p>
-                                        {project.description && (
-                                            <ul className="list-disc list-inside text-sm text-zinc-700  space-y-1">
-                                                {project.description.split("\n").map((line, i) => (
-                                                    <li key={i}>{line}</li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
+                    {/* Projects Section */}
+{(data.projects || data.project) && (data.projects || data.project).length > 0 && (
+    <section>
+        <h2 className="text-sm uppercase tracking-widest font-semibold" style={{ color: accentColor }}>
+            PROJECTS
+        </h2>
+        <div className="space-y-4">
+            {/* Dono variables handle kiye hain taaki agar data.projects ho ya data.project, crash na ho */}
+            {(data.projects || data.project).map((project, index) => (
+                <div key={index}>
+                    {/* Yahan 'name' aur 'title' dono check ho rahe hain */}
+                    <h3 className="text-md font-medium text-zinc-800 mt-3">
+                        {project.name || project.title || "Untitled Project"}
+                    </h3>
+                    
+                    {/* 'type' ya 'link' display karne ke liye */}
+                    <p className="text-sm mb-1" style={{ color: accentColor }} >
+                        {project.type || project.link}
+                    </p>
+
+                    {project.description && (
+                        <ul className="list-disc list-inside text-sm text-zinc-700 space-y-1">
+                            {project.description.split("\n").map((line, i) => (
+                                <li key={i}>{line}</li>
+                            ))}
+                        </ul>
                     )}
+                </div>
+            ))}
+        </div>
+    </section>
+)}
                 </main>
             </div>
         </div>
