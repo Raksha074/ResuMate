@@ -38,6 +38,8 @@ app.use(express.json());
 // 4. Routes
 app.get('/', (req, res) => res.send("Server is live..."));
 app.use('/api/users', userRouter);
+app.use('/api/resumes', resumeRouter);
+app.use('/api/ai', aiRouter);
 // ... other routes
 
 // 5. START SERVER (This is what Render is looking for!)
