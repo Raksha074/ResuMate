@@ -14,18 +14,21 @@ await connectDB()
 
 app.use(express.json())
 
+// Place this BEFORE any app.use('/api', ...) lines
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend URL (e.g., Vite is 5173)
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'] 
+  origin: function (origin, callback) {
+    // Allow local development and your specific Vercel domain
+    const allowed = [
+      'http://localhost:5173',
+      'https://resu-mate-gamma.vercel.app'
+    ];
+    if (!origin || allowed.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS blocked this request'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
-
-app.get('/', (req, res)=> res.send("Server is live..."))
-app.use('/api/users', userRouter)
-app.use('/api/resumes', resumeRouter)
-app.use('/api/ai', aiRouter)
-
-app.listen(PORT, ()=>{
-    console.log(`Server is running on port ${PORT}`);
-    
-});

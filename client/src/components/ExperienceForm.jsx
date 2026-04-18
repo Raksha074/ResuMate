@@ -45,7 +45,7 @@ const updateExperience = (index, field, value)=>{
 
     try {
         // 2. Use a unique name for the response (res) to avoid prop conflict
-        const res = await api.post('/api/ai/enhance-job-desc', 
+        const res = await api.post('/ai/enhance-job-desc', 
             { userContent: prompt }, 
             { headers: { Authorization: token } }
         );

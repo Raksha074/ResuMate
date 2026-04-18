@@ -59,7 +59,7 @@ const Dashboard = () => {
 
     const loadAllResumes = async () => {
         try {
-            const { data } = await api.get('/api/users/resumes', { headers: { Authorization: token } })
+            const { data } = await api.get('/users/resumes', { headers: { Authorization: token } })
             setAllResumes(data.resumes)
         } catch (error) {
             toast.error(error?.response?.data?.message || error.message)
@@ -69,7 +69,7 @@ const Dashboard = () => {
     const createResume = async (event) => {
         try {
             event.preventDefault()
-            const { data } = await api.post('/api/resumes/create', { title }, { headers: { Authorization: token } })
+            const { data } = await api.post('/resumes/create', { title }, { headers: { Authorization: token } })
             setAllResumes([...allResumes, data.resume])
             setTitle('')
             setShowCreateResume(false)
@@ -92,7 +92,7 @@ const Dashboard = () => {
             return
         }
 
-        const { data } = await api.post('/api/ai/upload-resume',
+        const { data } = await api.post('/ai/upload-resume',
             { title, resumeText },
             { headers: { Authorization: token } }
         )
@@ -109,7 +109,7 @@ const Dashboard = () => {
     const editTitle = async (event) => {
         try {
             event.preventDefault()
-            const { data } = await api.put(`/api/resumes/update`, { resumeId: editResumeId, resumeData: { title } }, { headers: { Authorization: token } })
+            const { data } = await api.put(`/resumes/update`, { resumeId: editResumeId, resumeData: { title } }, { headers: { Authorization: token } })
             setAllResumes(allResumes.map(resume => resume._id === editResumeId ? { ...resume, title } : resume))
             setTitle('')
             setEditResumeId('')
@@ -124,7 +124,7 @@ const Dashboard = () => {
         try {
             const confirm = window.confirm('Are you sure you want to delete this resume?')
             if (confirm) {
-                const { data } = await api.delete(`/api/resumes/delete/${resumeId}`, { headers: { Authorization: token } })
+                const { data } = await api.delete(`/resumes/delete/${resumeId}`, { headers: { Authorization: token } })
                 setAllResumes(allResumes.filter(resume => resume._id !== resumeId))
                 toast.success(data.message)
             }
