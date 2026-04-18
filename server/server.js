@@ -17,12 +17,15 @@ app.use(express.json())
 // Place this BEFORE any app.use('/api', ...) lines
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow local development and your specific Vercel domain
-    const allowed = [
+    const allowedOrigins = [
       'http://localhost:5173',
       'https://resu-mate-gamma.vercel.app'
     ];
-    if (!origin || allowed.indexOf(origin) !== -1) {
+
+    // Check if origin is in the allowed list OR is a Vercel preview URL
+    const isVercelPreview = origin && origin.endsWith('.vercel.app');
+
+    if (!origin || allowedOrigins.includes(origin) || isVercelPreview) {
       callback(null, true);
     } else {
       callback(new Error('CORS blocked this request'));
